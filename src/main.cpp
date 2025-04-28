@@ -32,7 +32,6 @@ std::vector<std::vector<std::vector<unsigned int>>> map = {};
 // declaring functions
 void SpawnLights(Canis::World &_world);
 void LoadMap(std::string _path);
-void Rotate(Canis::World &_world, Canis::Entity &_entity, float _deltaTime);
 
 #ifdef _WIN32
 #define main SDL_main
@@ -92,7 +91,7 @@ int main(int argc, char* argv[])
     /// END OF SHADER
 
     /// Load Image
-    Canis::GLTexture glassTexture = Canis::LoadImageGL("assets/textures/glass.png", true);
+    Canis::GLTexture dirtT = Canis::LoadImageGL("assets/textures/dirt.png", true);
     Canis::GLTexture grassTexture = Canis::LoadImageGL("assets/textures/grass.png", false);
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
     /// End of Image Loading
@@ -118,8 +117,8 @@ int main(int argc, char* argv[])
                 switch (map[y][x][z])
                 {
                 case 1: // places a glass block
-                    entity.tag = "glass";
-                    entity.albedo = &glassTexture;
+                    entity.tag = "dirt";
+                    entity.albedo = &dirtT;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
                     entity.shader = &shader;
@@ -133,7 +132,7 @@ int main(int argc, char* argv[])
                     entity.model = &grassModel;
                     entity.shader = &grassShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
-                    entity.Update = &Rotate;
+                    //entity.Update = &Rotate;
                     world.Spawn(entity);
                     break;
                 default:
@@ -166,11 +165,6 @@ int main(int argc, char* argv[])
     }
 
     return 0;
-}
-
-void Rotate(Canis::World &_world, Canis::Entity &_entity, float _deltaTime)
-{
-    //_entity.transform.rotation.y += _deltaTime;
 }
 
 void LoadMap(std::string _path)
@@ -227,17 +221,17 @@ void SpawnLights(Canis::World &_world)
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(0.0f, 0.0f, 1.0f);
-    pointLight.ambient = vec3(4.0f, 0.0f, 0.0f);
+    pointLight.ambient = vec3(0.0f, 0.0f, 0.0f);
 
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(-2.0f);
-    pointLight.ambient = vec3(0.0f, 4.0f, 0.0f);
+    pointLight.ambient = vec3(0.0f, 0.0f, 0.0f);
 
     _world.SpawnPointLight(pointLight);
 
     pointLight.position = vec3(2.0f);
-    pointLight.ambient = vec3(0.0f, 0.0f, 4.0f);
+    pointLight.ambient = vec3(0.0f, 0.0f, 0.0f);
 
     _world.SpawnPointLight(pointLight);
 }
