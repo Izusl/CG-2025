@@ -103,6 +103,7 @@ int main(int argc, char* argv[])
 
     Canis::GLTexture oak_log = Canis::LoadImageGL("assets/textures/oak_log.png", true);
     Canis::GLTexture cobblestone = Canis::LoadImageGL("assets/textures/cobblestone.png", true);
+    Canis::GLTexture mossy_cobblestone = Canis::LoadImageGL("assets/textures/mossy_cobblestone.png", true);
     Canis::GLTexture white_wool = Canis::LoadImageGL("assets/textures/white_wool.png", true);
 
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
@@ -193,9 +194,15 @@ int main(int argc, char* argv[])
                         break;
 
 
-                    case 4: // cobblestone
-                        entity.tag = "cobblestone";
-                        entity.albedo = &cobblestone;
+                        case 4: // cobblestone
+                        if (rand() % 3 == 0) { // 1 in 3 chance
+                            entity.tag = "mossy_cobblestone";
+                            entity.albedo = &mossy_cobblestone; // textures mossy instead of normal cobble
+                        } 
+                        else {
+                            entity.tag = "cobblestone";  // textures normal cobble
+                            entity.albedo = &cobblestone;
+                        }
                         entity.specular = &textureSpecular;
                         entity.model = &cubeModel;
                         entity.shader = &shader;
