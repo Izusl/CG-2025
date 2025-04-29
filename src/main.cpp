@@ -91,8 +91,20 @@ int main(int argc, char* argv[])
     /// END OF SHADER
 
     /// Load Image
-    Canis::GLTexture dirtT = Canis::LoadImageGL("assets/textures/dirt.png", true);
-    Canis::GLTexture grassTexture = Canis::LoadImageGL("assets/textures/grass.png", false);
+    Canis::GLTexture dirt = Canis::LoadImageGL("assets/textures/dirt.png", true);
+
+    Canis::GLTexture grass = Canis::LoadImageGL("assets/textures/grass.png", false);
+    Canis::GLTexture poppy = Canis::LoadImageGL("assets/textures/poppy.png", false);
+    Canis::GLTexture blue_orchid = Canis::LoadImageGL("assets/textures/blue_orchid.png", false);
+    Canis::GLTexture allium = Canis::LoadImageGL("assets/textures/allium.png", false);
+    Canis::GLTexture white_tulip = Canis::LoadImageGL("assets/textures/white_tulip.png", false);
+    Canis::GLTexture lily_of_the_valley = Canis::LoadImageGL("assets/textures/lily_of_the_valley.png", false);
+    Canis::GLTexture azure_bluet = Canis::LoadImageGL("assets/textures/azure_bluet.png", false);
+
+    Canis::GLTexture oak_log = Canis::LoadImageGL("assets/textures/oak_log.png", true);
+    Canis::GLTexture cobblestone = Canis::LoadImageGL("assets/textures/cobblestone.png", true);
+    Canis::GLTexture white_wool = Canis::LoadImageGL("assets/textures/white_wool.png", true);
+
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
     /// End of Image Loading
 
@@ -116,27 +128,94 @@ int main(int argc, char* argv[])
 
                 switch (map[y][x][z])
                 {
-                case 1: // places a glass block
-                    entity.tag = "dirt";
-                    entity.albedo = &dirtT;
-                    entity.specular = &textureSpecular;
-                    entity.model = &cubeModel;
-                    entity.shader = &shader;
-                    entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
-                    world.Spawn(entity);
-                    break;
-                case 2: // places a grass block
-                    entity.tag = "grass";
-                    entity.albedo = &grassTexture;
-                    entity.specular = &textureSpecular;
-                    entity.model = &grassModel;
-                    entity.shader = &grassShader;
-                    entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
-                    //entity.Update = &Rotate;
-                    world.Spawn(entity);
-                    break;
-                default:
-                    break;
+                    case 0:
+                        break; // air
+
+
+                    case 1: //dirt
+                        entity.tag = "dirt";
+                        entity.albedo = &dirt;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+
+                    case 2: { // short grass or flower
+                        if (std::rand() % 2 != 0) { 
+                            // 50% chance to place something, adjust for short grass 
+                            int grassChance = std::rand() % 100;
+                            
+                            if (grassChance < 90) { // 90% chance to place short grass
+                                entity.tag = "short_grass"; // short grass tag
+                                entity.albedo = &grass; // short grass texture
+                                entity.specular = &textureSpecular;
+                                entity.model = &grassModel;
+                                entity.shader = &grassShader;
+                                entity.transform.position = vec3(x, y, z);
+                                world.Spawn(entity);
+                                break;
+                            }
+                        }
+                    
+                        // 30% chance for flowers if not placed short grass
+                        static const std::vector<std::pair<const char*, Canis::GLTexture*>> floraOptions = {
+                            {"poppy", &poppy},
+                            {"blue_orchid", &blue_orchid},
+                            {"allium", &allium},
+                            {"white_tulip", &white_tulip},
+                            {"lily_of_the_valley", &lily_of_the_valley},
+                            {"azure_bluet", &azure_bluet}
+                        };
+                    
+                        int index = std::rand() % floraOptions.size();
+                        entity.tag = floraOptions[index].first;
+                        entity.albedo = floraOptions[index].second;
+                        entity.specular = &textureSpecular;
+                        entity.model = &grassModel;
+                        entity.shader = &grassShader;
+                        entity.transform.position = vec3(x, y, z);
+                        world.Spawn(entity);
+                        break;
+                    }
+
+
+                    case 3: // oaklog
+                        entity.tag = "oak_log";
+                        entity.albedo = &oak_log;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+
+                    case 4: // cobblestone
+                        entity.tag = "cobblestone";
+                        entity.albedo = &cobblestone;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+                    case 5: // white wool
+                        entity.tag = "white_wool";
+                        entity.albedo = &white_wool;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+
+                    default:
+                        break;
                 }
             }
         }
