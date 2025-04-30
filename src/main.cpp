@@ -91,8 +91,8 @@ int main(int argc, char* argv[])
     /// END OF SHADER
 
     /// Load Image
-    Canis::GLTexture dirt = Canis::LoadImageGL("assets/textures/dirt.png", true);
 
+    
     Canis::GLTexture grass = Canis::LoadImageGL("assets/textures/grass.png", false);
     Canis::GLTexture poppy = Canis::LoadImageGL("assets/textures/poppy.png", false);
     Canis::GLTexture blue_orchid = Canis::LoadImageGL("assets/textures/blue_orchid.png", false);
@@ -101,11 +101,14 @@ int main(int argc, char* argv[])
     Canis::GLTexture lily_of_the_valley = Canis::LoadImageGL("assets/textures/lily_of_the_valley.png", false);
     Canis::GLTexture azure_bluet = Canis::LoadImageGL("assets/textures/azure_bluet.png", false);
 
+    Canis::GLTexture dirt = Canis::LoadImageGL("assets/textures/dirt.png", true);
+    Canis::GLTexture glass = Canis::LoadImageGL("assets/textures/glass.png", true);
+    Canis::GLTexture red_wool = Canis::LoadImageGL("assets/textures/red_wool.png", true);
     Canis::GLTexture oak_log = Canis::LoadImageGL("assets/textures/oak_log.png", true);
     Canis::GLTexture cobblestone = Canis::LoadImageGL("assets/textures/cobblestone.png", true);
     Canis::GLTexture mossy_cobblestone = Canis::LoadImageGL("assets/textures/mossy_cobblestone.png", true);
     Canis::GLTexture white_wool = Canis::LoadImageGL("assets/textures/white_wool.png", true);
-
+    Canis::GLTexture cherry_leaves = Canis::LoadImageGL("assets/textures/cherry_leaves.png", true);
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
     /// End of Image Loading
 
@@ -213,6 +216,36 @@ int main(int argc, char* argv[])
                     case 5: // white wool
                         entity.tag = "white_wool";
                         entity.albedo = &white_wool;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+                    case 6: // white wool
+                        entity.tag = "red_wool";
+                        entity.albedo = &red_wool;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+                    case 7: // white wool
+                        entity.tag = "glass";
+                        entity.albedo = &glass;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+                    case 8: // white wool
+                        entity.tag = "cherry_leaves";
+                        entity.albedo = &cherry_leaves;
                         entity.specular = &textureSpecular;
                         entity.model = &cubeModel;
                         entity.shader = &shader;
