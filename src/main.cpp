@@ -101,15 +101,16 @@ int main(int argc, char* argv[])
     Canis::GLTexture lily_of_the_valley = Canis::LoadImageGL("assets/textures/lily_of_the_valley.png", false);
     Canis::GLTexture azure_bluet = Canis::LoadImageGL("assets/textures/azure_bluet.png", false);
 
-    Canis::GLTexture dirt = Canis::LoadImageGL("assets/textures/dirt.png", true);
+    Canis::GLTexture grass_top = Canis::LoadImageGL("assets/textures/grass_block_top.png", true);
     Canis::GLTexture glass = Canis::LoadImageGL("assets/textures/glass.png", true);
-    Canis::GLTexture red_wool = Canis::LoadImageGL("assets/textures/red_wool.png", true);
+    Canis::GLTexture red_wool = Canis::LoadImageGL("assets/textures/white_wool.png", true);
     Canis::GLTexture oak_log = Canis::LoadImageGL("assets/textures/oak_log.png", true);
     Canis::GLTexture cobblestone = Canis::LoadImageGL("assets/textures/cobblestone.png", true);
     Canis::GLTexture mossy_cobblestone = Canis::LoadImageGL("assets/textures/mossy_cobblestone.png", true);
     Canis::GLTexture white_wool = Canis::LoadImageGL("assets/textures/white_wool.png", true);
     Canis::GLTexture cherry_leaves = Canis::LoadImageGL("assets/textures/cherry_leaves.png", true);
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
+    Canis::GLTexture netherrack = Canis::LoadImageGL("assets/textures/netherrack.png", true);
     /// End of Image Loading
 
     /// Load Models
@@ -136,12 +137,15 @@ int main(int argc, char* argv[])
                         break; // air
 
 
-                    case 1: //dirt
-                        entity.tag = "dirt";
-                        entity.albedo = &dirt;
+                    case 1: //grass_top
+                        entity.tag = "grass_block_top";
+                        entity.albedo = &grass_top;
                         entity.specular = &textureSpecular;
                         entity.model = &cubeModel;
-                        entity.shader = &shader;
+                        entity.shader = &shader; 
+                        // Minecraft grass is grayscale by default so change tint
+                        entity.color = vec3(0.3686, 0.6157, 0.2039);
+
                         entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                         world.Spawn(entity);
                         break;
@@ -246,6 +250,16 @@ int main(int argc, char* argv[])
                     case 8: // white wool
                         entity.tag = "cherry_leaves";
                         entity.albedo = &cherry_leaves;
+                        entity.specular = &textureSpecular;
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                        world.Spawn(entity);
+                        break;
+
+                    case 9: // white wool
+                        entity.tag = "netherrack";
+                        entity.albedo = &netherrack;
                         entity.specular = &textureSpecular;
                         entity.model = &cubeModel;
                         entity.shader = &shader;
