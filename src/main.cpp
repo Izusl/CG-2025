@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
     shader.Use();
     shader.SetInt("MATERIAL.diffuse", 0);
     shader.SetInt("MATERIAL.specular", 1);
-    shader.SetFloat("MATERIAL.shininess", 64);
+    shader.SetFloat("MATERIAL.shininess", 255);
     shader.SetBool("WIND", false);
     shader.UnUse();
 
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
     grassShader.Use();
     grassShader.SetInt("MATERIAL.diffuse", 0);
     grassShader.SetInt("MATERIAL.specular", 1);
-    grassShader.SetFloat("MATERIAL.shininess", 64);
+    grassShader.SetFloat("MATERIAL.shininess", 1);
     grassShader.SetBool("WIND", true);
     grassShader.SetFloat("WINDEFFECT", 0.2);
     grassShader.UnUse();
@@ -106,6 +106,7 @@ int main(int argc, char* argv[])
     Canis::GLTexture azure_bluet = Canis::LoadImageGL("assets/textures/azure_bluet.png", false);
 
     Canis::GLTexture grass_top = Canis::LoadImageGL("assets/textures/grass_block_top.png", true);
+    Canis::GLTexture grass_top_specular = Canis::LoadImageGL("assets/textures/grass_top_specular.png", true);
     Canis::GLTexture glass = Canis::LoadImageGL("assets/textures/glass.png", true);
     Canis::GLTexture red_wool = Canis::LoadImageGL("assets/textures/white_wool.png", true);
     Canis::GLTexture oak_log = Canis::LoadImageGL("assets/textures/oak_log.png", true);
@@ -115,6 +116,7 @@ int main(int argc, char* argv[])
     Canis::GLTexture cherry_leaves = Canis::LoadImageGL("assets/textures/cherry_leaves.png", true);
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
     Canis::GLTexture netherrack = Canis::LoadImageGL("assets/textures/netherrack.png", true);
+    Canis::GLTexture stone_bricks = Canis::LoadImageGL("assets/textures/bricks.png", true);
 
     /// Load Models
     Canis::Model cubeModel = Canis::LoadModel("assets/models/cube.obj");
@@ -175,7 +177,7 @@ int main(int argc, char* argv[])
                         /* 
                             Using different specutar materials by using the same texture as the albedo
                         */
-                        entity.specular = &grass_top;
+                        entity.specular = &grass_top_specular;
 
                         entity.model = &cubeModel;
                         entity.shader = &shader; 
@@ -372,6 +374,19 @@ int main(int argc, char* argv[])
                         entity.transform.position = vec3(x, y, z);
                         world.Spawn(entity);
                         break;
+
+                    case 11:
+                        entity.tag = "stone_bricks";
+                        entity.albedo = &stone_bricks;
+                        entity.specular = &stone_bricks;
+                        /* 
+                            Using different specutar materials by using the same texture as the albedo
+                        */
+                        entity.model = &cubeModel;
+                        entity.shader = &shader;
+                        entity.transform.position = vec3(x, y, z);
+                        world.Spawn(entity);
+                        break;
                     
                     default:
                         break;
@@ -524,7 +539,7 @@ void SpawnLights(Canis::World &_world)
     pointLight.position = vec3(2.0f);
     pointLight.ambient = vec3(0.0f, 0.0f, 0.0f);
 
-    _world.SpawnPointLight(pointLight);
+
     
 
     //pointLight.position = vec3(4.0f, 1.0f, 7.0f);
