@@ -16,6 +16,7 @@ namespace Canis
         void Update(double _deltaTime);
         void Draw(double _deltaTime);
         void Spawn(Entity _entity);
+        void ReplaceEntityTexture(const std::string& tag);
         void SpawnPointLight(PointLight _light);
         void SpawnDirectionalLight(DirectionalLight _light);
         Camera& GetCamera() { return m_camera; }
@@ -23,6 +24,7 @@ namespace Canis
         std::vector<Entity>& GetEntities() { return m_entities; }
         int GetEntitiesSize() { return m_entities.size(); }
         Entity* GetEntityWithTag(std::string _tag);
+        std::vector<Entity> m_entities = {}; //probably bad idea but made public
         std::vector<Entity*> GetEntitiesWithTag(std::string _tag);
         PointLight* GetPointLight(glm::vec3 _position); // returns nullptr when light is not found
         DirectionalLight& GetDirectionalLight() { return m_directionalLight; }
@@ -35,7 +37,6 @@ namespace Canis
         unsigned int m_skyboxId;
         Model m_skyboxModel;
         DirectionalLight m_directionalLight;
-        std::vector<Entity> m_entities = {};
         std::vector<PointLight> m_pointLights = {};
 
         void UpdateLights(Canis::Shader &_shader);
